@@ -1,19 +1,41 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { addTodo, updateTodo } from "../redux/todoSlice";
+import { toast } from "react-toastify";
 
 export default function NewTodo() {
-  const [value, setValue] = useState();
-
+  const [value, setValue] = useState('');
+ const updatedTodo = useSelector((state) => state.todos.updatedTodo);
   const dispatch = useDispatch()
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (updatedTodo.edit === true) {
+      setValue(updatedTodo.item);
+    }
+  }, [updatedTodo]);
+  const addNew = () => {
     dispatch(addTodo({
       title: value,
     }))
-    setValue('')
+    // setValue('')
   }
+
+   const onSubmit = (e) => {
+     e.preventDefault();
+      if (value.length > 0) {
+        addNew()
+        if (updatedTodo.edit === true) {
+          dispatch(updateTodo([updatedTodo.item]));
+          toast.success("Todo updated");
+        } else {
+          dispatch(addNew());
+          toast.success("Added new todo");
+        }
+      } else {
+        toast.error("Todo cannot be empty");
+      }
+      setValue("");
+   };
 
   return (
     <form

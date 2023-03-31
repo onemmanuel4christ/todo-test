@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import {
-  toggleComplete,
-  deleteTodo,
-  removeTodo,
-  editTodo,
-} from "../redux/todoSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleComplete, deleteTodo, editTodo } from "../redux/todoSlice";
 
 export default function Item({ id, title, completed }) {
   const dispatch = useDispatch();
@@ -14,10 +9,14 @@ export default function Item({ id, title, completed }) {
     dispatch(toggleComplete({ id: id, completed: !completed }));
   };
 
-  const handleDeleteCLick = () => {
-    dispatch(deleteTodo({ id: id }));
+  const handleDeleteCLick = (e) => {
+    e.preventDefault()
+    dispatch(deleteTodo({id}));
   };
 
+    const handleEdit = (e) => {
+        dispatch(editTodo({ id, title, completed }))
+    } 
   return (
     <li
       className={`w-full text-[#19A7CE] font-semibold border-2 border-gray-100 p-1 my-2 ${
@@ -37,7 +36,7 @@ export default function Item({ id, title, completed }) {
           {title}
         </span>
         <div className="flex items-center gap-2">
-          <button onClick={() => dispatch(editTodo({ title:title }))} className="">
+          <button onClick={handleEdit} className="">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
