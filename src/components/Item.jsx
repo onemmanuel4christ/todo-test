@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toggleComplete, deleteTodo, editTodo } from "../redux/todoSlice";
 
 export default function Item({ id, title, completed }) {

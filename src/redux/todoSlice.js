@@ -19,12 +19,7 @@ const todoSlice = createSlice({
   },
   reducers: {
     addTodo: (state, action) => {
-      const newTodo = {
-        id: Date.now(),
-        title: action.payload.title,
-        completed: false,
-      };
-      state.lists.unshift(newTodo);
+         state.lists.unshift(action.payload);
     },
 
     toggleComplete: (state, action) => {
@@ -48,12 +43,13 @@ const todoSlice = createSlice({
       };
     },
     updateTodo: (state, action) => {
-      state.lists = state.lists.map((todo) =>
-        todo.id === action.payload.id ? { ...todo, ...action.payload.title } : todo
-      );
-      state.updatedTodo = { item: {}, edit: false };
+      state.lists.map((todo) => {
+        if (todo.id === action.payload.id) {
+          todo.title = action.payload.title
+        }
+      });
     },
-  },
+   },
 });
 
 export const {
