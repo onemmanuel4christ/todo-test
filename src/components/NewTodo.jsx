@@ -4,7 +4,7 @@ import { addTodo, updateTodo } from "../redux/todoSlice";
 import { toast } from "react-toastify";
 
 export default function NewTodo() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState();
  const updatedTodo = useSelector((state) => state.todos.updatedTodo);
   const dispatch = useDispatch()
 
@@ -13,29 +13,34 @@ export default function NewTodo() {
       setValue(updatedTodo.item);
     }
   }, [updatedTodo]);
-  const addNew = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     dispatch(addTodo({
       title: value,
     }))
-    // setValue('')
+    setValue('')
   }
 
-   const onSubmit = (e) => {
-     e.preventDefault();
-      if (value.length > 0) {
-        addNew()
-        if (updatedTodo.edit === true) {
-          dispatch(updateTodo([updatedTodo.item]));
-          toast.success("Todo updated");
-        } else {
-          dispatch(addNew());
-          toast.success("Added new todo");
-        }
-      } else {
-        toast.error("Todo cannot be empty");
-      }
-      setValue("");
-   };
+  //  const onSubmit = (e) => {
+  //    e.preventDefault();
+  //     if (!value === '') {
+  //       const newTodo = {
+  //         id: Math.floor(Math.random() * 1000),
+  //         title: value,
+  //         completed: false,
+  //       };
+  //       if (updatedTodo.edit === true) {
+  //         dispatch(updateTodo([updatedTodo.item.id, newTodo]));
+  //         toast.success("Todo updated");
+  //       } else {
+  //         dispatch(addTodo(newTodo));
+  //         toast.success("Added new todo");
+  //       }
+  //     } else {
+  //       toast.error("Todo cannot be empty");
+  //     }
+  //     setValue("");
+  //  };
 
   return (
     <form
