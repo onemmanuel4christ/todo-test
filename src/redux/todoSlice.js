@@ -49,7 +49,7 @@ const todoSlice = createSlice({
     },
     updateTodo: (state, action) => {
       state.lists = state.lists.map((todo) =>
-        todo.id === action.payload[0] ? { ...todo, ...action.payload[1] } : todo
+        todo.id === action.payload.id ? { ...todo, ...action.payload.title } : todo
       );
       state.updatedTodo = { item: {}, edit: false };
     },

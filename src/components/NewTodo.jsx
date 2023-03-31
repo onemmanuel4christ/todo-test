@@ -13,11 +13,18 @@ export default function NewTodo() {
       setValue(updatedTodo.item);
     }
   }, [updatedTodo]);
+
   const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(addTodo({
-      title: value,
-    }))
+    if (!updateTodo.edit) {
+      e.preventDefault();
+      dispatch(
+        addTodo({
+          title: value,
+        })
+      );
+    } else {
+      
+   }
     setValue('')
   }
 
