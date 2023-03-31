@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { addTodo } from '../redux/todoSlice';
+import { addTodo, updateTodo } from "../redux/todoSlice";
 
 export default function NewTodo() {
   const [value, setValue] = useState();
@@ -22,7 +22,7 @@ export default function NewTodo() {
     >
       <input
         type="text"
-        className="flex-1 border-2 outline-none border-orange-300 rounded-sm p-2 capitalize"
+        className="flex-1 border-2 outline-none border-orange-300 rounded-sm p-2 uppercase"
         placeholder="Type your todo here"
         value={value}
         onChange={(e) => setValue(e.target.value)}

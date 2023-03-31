@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { toggleComplete } from '../redux/todoSlice';
+import {
+  toggleComplete,
+  deleteTodo,
+  removeTodo,
+  editTodo,
+} from "../redux/todoSlice";
 
 export default function Item({ id, title, completed }) {
-    const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
-    const handleCompleteClick = () => {
-        dispatch(toggleComplete({id: id, completed: !completed}))
-    }
-console.log(completed)
+  const handleCompleteClick = () => {
+    dispatch(toggleComplete({ id: id, completed: !completed }));
+  };
+
+  const handleDeleteCLick = () => {
+    dispatch(deleteTodo({ id: id }));
+  };
+
   return (
     <li
       className={`w-full text-[#19A7CE] font-semibold border-2 border-gray-100 p-1 my-2 ${
@@ -17,7 +26,7 @@ console.log(completed)
     >
       <div className={`flex justify-between`}>
         <span
-         className={`flex items-center gap-2  ${completed && "line-through"}`}
+          className={`flex items-center gap-2  ${completed && "line-through"}`}
         >
           <input
             type="checkbox"
@@ -28,7 +37,7 @@ console.log(completed)
           {title}
         </span>
         <div className="flex items-center gap-2">
-          <button className="">
+          <button onClick={() => dispatch(editTodo({ title:title }))} className="">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -44,7 +53,7 @@ console.log(completed)
               />
             </svg>
           </button>
-          <button className="">
+          <button onClick={handleDeleteCLick} className="">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
